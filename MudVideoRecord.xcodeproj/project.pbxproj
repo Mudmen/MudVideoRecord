@@ -1,0 +1,548 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AE8E454A1C4E1E6F00A0DECE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E45491C4E1E6F00A0DECE /* AppDelegate.swift */; };
+		AE8E454C1C4E1E6F00A0DECE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E454B1C4E1E6F00A0DECE /* ViewController.swift */; };
+		AE8E45511C4E1E6F00A0DECE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AE8E45501C4E1E6F00A0DECE /* Assets.xcassets */; };
+		AE8E45541C4E1E6F00A0DECE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE8E45521C4E1E6F00A0DECE /* LaunchScreen.storyboard */; };
+		AE8E455F1C4E1E6F00A0DECE /* MudVideoRecordTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E455E1C4E1E6F00A0DECE /* MudVideoRecordTests.swift */; };
+		AE8E456A1C4E1E6F00A0DECE /* MudVideoRecordUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E45691C4E1E6F00A0DECE /* MudVideoRecordUITests.swift */; };
+		AE8E45791C4E1F1900A0DECE /* MudVideoPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E45781C4E1F1900A0DECE /* MudVideoPreviewView.swift */; };
+		AE8E457B1C4E217F00A0DECE /* MudVideoRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E457A1C4E217F00A0DECE /* MudVideoRecordViewController.swift */; };
+		AE8E457D1C4E229300A0DECE /* MudVideoControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E457C1C4E229300A0DECE /* MudVideoControls.swift */; };
+		AE8E45831C4E270C00A0DECE /* ASPopUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8E45801C4E270C00A0DECE /* ASPopUpView.m */; };
+		AE8E45841C4E270C00A0DECE /* ASProgressPopUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8E45821C4E270C00A0DECE /* ASProgressPopUpView.m */; };
+		AE8E45951C50B43900A0DECE /* MudVideoRecord.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AE8E45941C50B43900A0DECE /* MudVideoRecord.bundle */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AE8E455B1C4E1E6F00A0DECE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AE8E453E1C4E1E6F00A0DECE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AE8E45451C4E1E6F00A0DECE;
+			remoteInfo = MudVideoRecord;
+		};
+		AE8E45661C4E1E6F00A0DECE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AE8E453E1C4E1E6F00A0DECE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AE8E45451C4E1E6F00A0DECE;
+			remoteInfo = MudVideoRecord;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		AE8E45461C4E1E6F00A0DECE /* MudVideoRecord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MudVideoRecord.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE8E45491C4E1E6F00A0DECE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		AE8E454B1C4E1E6F00A0DECE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		AE8E45501C4E1E6F00A0DECE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AE8E45531C4E1E6F00A0DECE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		AE8E45551C4E1E6F00A0DECE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AE8E455A1C4E1E6F00A0DECE /* MudVideoRecordTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MudVideoRecordTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE8E455E1C4E1E6F00A0DECE /* MudVideoRecordTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MudVideoRecordTests.swift; sourceTree = "<group>"; };
+		AE8E45601C4E1E6F00A0DECE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AE8E45651C4E1E6F00A0DECE /* MudVideoRecordUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MudVideoRecordUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE8E45691C4E1E6F00A0DECE /* MudVideoRecordUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MudVideoRecordUITests.swift; sourceTree = "<group>"; };
+		AE8E456B1C4E1E6F00A0DECE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AE8E45781C4E1F1900A0DECE /* MudVideoPreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MudVideoPreviewView.swift; sourceTree = "<group>"; };
+		AE8E457A1C4E217F00A0DECE /* MudVideoRecordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MudVideoRecordViewController.swift; sourceTree = "<group>"; };
+		AE8E457C1C4E229300A0DECE /* MudVideoControls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MudVideoControls.swift; sourceTree = "<group>"; };
+		AE8E457E1C4E270B00A0DECE /* MudVideoRecord-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MudVideoRecord-Bridging-Header.h"; sourceTree = "<group>"; };
+		AE8E457F1C4E270C00A0DECE /* ASPopUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASPopUpView.h; sourceTree = "<group>"; };
+		AE8E45801C4E270C00A0DECE /* ASPopUpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASPopUpView.m; sourceTree = "<group>"; };
+		AE8E45811C4E270C00A0DECE /* ASProgressPopUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASProgressPopUpView.h; sourceTree = "<group>"; };
+		AE8E45821C4E270C00A0DECE /* ASProgressPopUpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASProgressPopUpView.m; sourceTree = "<group>"; };
+		AE8E45941C50B43900A0DECE /* MudVideoRecord.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MudVideoRecord.bundle; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AE8E45431C4E1E6F00A0DECE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AE8E45571C4E1E6F00A0DECE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AE8E45621C4E1E6F00A0DECE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AE8E453D1C4E1E6F00A0DECE = {
+			isa = PBXGroup;
+			children = (
+				AE8E45481C4E1E6F00A0DECE /* MudVideoRecord */,
+				AE8E455D1C4E1E6F00A0DECE /* MudVideoRecordTests */,
+				AE8E45681C4E1E6F00A0DECE /* MudVideoRecordUITests */,
+				AE8E45471C4E1E6F00A0DECE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AE8E45471C4E1E6F00A0DECE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AE8E45461C4E1E6F00A0DECE /* MudVideoRecord.app */,
+				AE8E455A1C4E1E6F00A0DECE /* MudVideoRecordTests.xctest */,
+				AE8E45651C4E1E6F00A0DECE /* MudVideoRecordUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AE8E45481C4E1E6F00A0DECE /* MudVideoRecord */ = {
+			isa = PBXGroup;
+			children = (
+				AE8E45771C4E1E9000A0DECE /* MudVideoRecord */,
+				AE8E45491C4E1E6F00A0DECE /* AppDelegate.swift */,
+				AE8E454B1C4E1E6F00A0DECE /* ViewController.swift */,
+				AE8E45501C4E1E6F00A0DECE /* Assets.xcassets */,
+				AE8E45521C4E1E6F00A0DECE /* LaunchScreen.storyboard */,
+				AE8E45551C4E1E6F00A0DECE /* Info.plist */,
+			);
+			path = MudVideoRecord;
+			sourceTree = "<group>";
+		};
+		AE8E455D1C4E1E6F00A0DECE /* MudVideoRecordTests */ = {
+			isa = PBXGroup;
+			children = (
+				AE8E455E1C4E1E6F00A0DECE /* MudVideoRecordTests.swift */,
+				AE8E45601C4E1E6F00A0DECE /* Info.plist */,
+			);
+			path = MudVideoRecordTests;
+			sourceTree = "<group>";
+		};
+		AE8E45681C4E1E6F00A0DECE /* MudVideoRecordUITests */ = {
+			isa = PBXGroup;
+			children = (
+				AE8E45691C4E1E6F00A0DECE /* MudVideoRecordUITests.swift */,
+				AE8E456B1C4E1E6F00A0DECE /* Info.plist */,
+			);
+			path = MudVideoRecordUITests;
+			sourceTree = "<group>";
+		};
+		AE8E45771C4E1E9000A0DECE /* MudVideoRecord */ = {
+			isa = PBXGroup;
+			children = (
+				AE8E45941C50B43900A0DECE /* MudVideoRecord.bundle */,
+				AE8E457F1C4E270C00A0DECE /* ASPopUpView.h */,
+				AE8E45801C4E270C00A0DECE /* ASPopUpView.m */,
+				AE8E45811C4E270C00A0DECE /* ASProgressPopUpView.h */,
+				AE8E45821C4E270C00A0DECE /* ASProgressPopUpView.m */,
+				AE8E45781C4E1F1900A0DECE /* MudVideoPreviewView.swift */,
+				AE8E457A1C4E217F00A0DECE /* MudVideoRecordViewController.swift */,
+				AE8E457C1C4E229300A0DECE /* MudVideoControls.swift */,
+				AE8E457E1C4E270B00A0DECE /* MudVideoRecord-Bridging-Header.h */,
+			);
+			path = MudVideoRecord;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AE8E45451C4E1E6F00A0DECE /* MudVideoRecord */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AE8E456E1C4E1E6F00A0DECE /* Build configuration list for PBXNativeTarget "MudVideoRecord" */;
+			buildPhases = (
+				AE8E45421C4E1E6F00A0DECE /* Sources */,
+				AE8E45431C4E1E6F00A0DECE /* Frameworks */,
+				AE8E45441C4E1E6F00A0DECE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MudVideoRecord;
+			productName = MudVideoRecord;
+			productReference = AE8E45461C4E1E6F00A0DECE /* MudVideoRecord.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AE8E45591C4E1E6F00A0DECE /* MudVideoRecordTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AE8E45711C4E1E6F00A0DECE /* Build configuration list for PBXNativeTarget "MudVideoRecordTests" */;
+			buildPhases = (
+				AE8E45561C4E1E6F00A0DECE /* Sources */,
+				AE8E45571C4E1E6F00A0DECE /* Frameworks */,
+				AE8E45581C4E1E6F00A0DECE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AE8E455C1C4E1E6F00A0DECE /* PBXTargetDependency */,
+			);
+			name = MudVideoRecordTests;
+			productName = MudVideoRecordTests;
+			productReference = AE8E455A1C4E1E6F00A0DECE /* MudVideoRecordTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		AE8E45641C4E1E6F00A0DECE /* MudVideoRecordUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AE8E45741C4E1E6F00A0DECE /* Build configuration list for PBXNativeTarget "MudVideoRecordUITests" */;
+			buildPhases = (
+				AE8E45611C4E1E6F00A0DECE /* Sources */,
+				AE8E45621C4E1E6F00A0DECE /* Frameworks */,
+				AE8E45631C4E1E6F00A0DECE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AE8E45671C4E1E6F00A0DECE /* PBXTargetDependency */,
+			);
+			name = MudVideoRecordUITests;
+			productName = MudVideoRecordUITests;
+			productReference = AE8E45651C4E1E6F00A0DECE /* MudVideoRecordUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AE8E453E1C4E1E6F00A0DECE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0710;
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = Mudmen;
+				TargetAttributes = {
+					AE8E45451C4E1E6F00A0DECE = {
+						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = Y3S4S2U4LU;
+					};
+					AE8E45591C4E1E6F00A0DECE = {
+						CreatedOnToolsVersion = 7.1.1;
+						TestTargetID = AE8E45451C4E1E6F00A0DECE;
+					};
+					AE8E45641C4E1E6F00A0DECE = {
+						CreatedOnToolsVersion = 7.1.1;
+						TestTargetID = AE8E45451C4E1E6F00A0DECE;
+					};
+				};
+			};
+			buildConfigurationList = AE8E45411C4E1E6F00A0DECE /* Build configuration list for PBXProject "MudVideoRecord" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AE8E453D1C4E1E6F00A0DECE;
+			productRefGroup = AE8E45471C4E1E6F00A0DECE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AE8E45451C4E1E6F00A0DECE /* MudVideoRecord */,
+				AE8E45591C4E1E6F00A0DECE /* MudVideoRecordTests */,
+				AE8E45641C4E1E6F00A0DECE /* MudVideoRecordUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AE8E45441C4E1E6F00A0DECE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AE8E45541C4E1E6F00A0DECE /* LaunchScreen.storyboard in Resources */,
+				AE8E45951C50B43900A0DECE /* MudVideoRecord.bundle in Resources */,
+				AE8E45511C4E1E6F00A0DECE /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AE8E45581C4E1E6F00A0DECE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AE8E45631C4E1E6F00A0DECE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AE8E45421C4E1E6F00A0DECE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AE8E457B1C4E217F00A0DECE /* MudVideoRecordViewController.swift in Sources */,
+				AE8E45831C4E270C00A0DECE /* ASPopUpView.m in Sources */,
+				AE8E45791C4E1F1900A0DECE /* MudVideoPreviewView.swift in Sources */,
+				AE8E454C1C4E1E6F00A0DECE /* ViewController.swift in Sources */,
+				AE8E45841C4E270C00A0DECE /* ASProgressPopUpView.m in Sources */,
+				AE8E457D1C4E229300A0DECE /* MudVideoControls.swift in Sources */,
+				AE8E454A1C4E1E6F00A0DECE /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AE8E45561C4E1E6F00A0DECE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AE8E455F1C4E1E6F00A0DECE /* MudVideoRecordTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AE8E45611C4E1E6F00A0DECE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AE8E456A1C4E1E6F00A0DECE /* MudVideoRecordUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AE8E455C1C4E1E6F00A0DECE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AE8E45451C4E1E6F00A0DECE /* MudVideoRecord */;
+			targetProxy = AE8E455B1C4E1E6F00A0DECE /* PBXContainerItemProxy */;
+		};
+		AE8E45671C4E1E6F00A0DECE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AE8E45451C4E1E6F00A0DECE /* MudVideoRecord */;
+			targetProxy = AE8E45661C4E1E6F00A0DECE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		AE8E45521C4E1E6F00A0DECE /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AE8E45531C4E1E6F00A0DECE /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		AE8E456C1C4E1E6F00A0DECE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AE8E456D1C4E1E6F00A0DECE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AE8E456F1C4E1E6F00A0DECE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = MudVideoRecord/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Mudmen.MudVideoRecord;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MudVideoRecord/MudVideoRecord/MudVideoRecord-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AE8E45701C4E1E6F00A0DECE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = MudVideoRecord/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Mudmen.MudVideoRecord;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MudVideoRecord/MudVideoRecord/MudVideoRecord-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		AE8E45721C4E1E6F00A0DECE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = MudVideoRecordTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Mudmen.MudVideoRecordTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MudVideoRecord.app/MudVideoRecord";
+			};
+			name = Debug;
+		};
+		AE8E45731C4E1E6F00A0DECE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = MudVideoRecordTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Mudmen.MudVideoRecordTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MudVideoRecord.app/MudVideoRecord";
+			};
+			name = Release;
+		};
+		AE8E45751C4E1E6F00A0DECE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = MudVideoRecordUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Mudmen.MudVideoRecordUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = MudVideoRecord;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		AE8E45761C4E1E6F00A0DECE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = MudVideoRecordUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Mudmen.MudVideoRecordUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = MudVideoRecord;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AE8E45411C4E1E6F00A0DECE /* Build configuration list for PBXProject "MudVideoRecord" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AE8E456C1C4E1E6F00A0DECE /* Debug */,
+				AE8E456D1C4E1E6F00A0DECE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AE8E456E1C4E1E6F00A0DECE /* Build configuration list for PBXNativeTarget "MudVideoRecord" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AE8E456F1C4E1E6F00A0DECE /* Debug */,
+				AE8E45701C4E1E6F00A0DECE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AE8E45711C4E1E6F00A0DECE /* Build configuration list for PBXNativeTarget "MudVideoRecordTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AE8E45721C4E1E6F00A0DECE /* Debug */,
+				AE8E45731C4E1E6F00A0DECE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AE8E45741C4E1E6F00A0DECE /* Build configuration list for PBXNativeTarget "MudVideoRecordUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AE8E45751C4E1E6F00A0DECE /* Debug */,
+				AE8E45761C4E1E6F00A0DECE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AE8E453E1C4E1E6F00A0DECE /* Project object */;
+}
