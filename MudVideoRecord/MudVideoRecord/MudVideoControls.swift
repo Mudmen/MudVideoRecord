@@ -20,7 +20,7 @@ protocol MudVideoControlsDelegate: NSObjectProtocol {
 }
 
 
-class MudVideoControls: UIView,ASProgressPopUpViewDataSource {
+class MudVideoControls: UIView {
 
     weak var delegate: MudVideoControlsDelegate?
     
@@ -67,7 +67,7 @@ class MudVideoControls: UIView,ASProgressPopUpViewDataSource {
     @property progressView
     @abstract 拍摄进度
     */
-    var progressView: ASProgressPopUpView!
+    var progressView: UIProgressView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -131,18 +131,12 @@ class MudVideoControls: UIView,ASProgressPopUpViewDataSource {
         self.deleteButton.center = CGPointMake(42+22.5, self.bounds.size.height-bottomHeight/2)
         self.addSubview(self.deleteButton)
         
-        self.progressView = ASProgressPopUpView(frame: CGRectMake(0,64+self.bounds.width*0.75,self.bounds.width,1))
-        self.progressView.font = UIFont.systemFontOfSize(12)
+        self.progressView = UIProgressView(frame: CGRectMake(0,64+self.bounds.width*0.75,self.bounds.width,1))
         self.progressView.trackTintColor = UIColor(red: 138.0/255.0, green: 137.0/255.0, blue: 137.0/255.0, alpha: 1)
         self.progressView.progressTintColor = UIColor(red: 244.0/255.0, green: 167.0/255.0, blue: 48.0/255.0, alpha: 1)
-//        let minView = UIView(frame: CGRectMake(self.bounds.width*0.25,0,2,3))
-//        minView.backgroundColor = UIColor.whiteColor()
-//        minView.alpha = 0.9
-//        self.progressView.addSubview(minView)
         self.progressView.transform = CGAffineTransformMakeScale(1.0,3.0)
         self.progressView.translatesAutoresizingMaskIntoConstraints = false
         self.progressView.progress = 0
-        self.progressView.dataSource = self
         self.addSubview(self.progressView)
     }
     
@@ -177,10 +171,6 @@ class MudVideoControls: UIView,ASProgressPopUpViewDataSource {
     
     func delayAction() {
         self.delegate?.videoControls(self, startOrPauseDidSelected: self.recordButton)
-    }
-    
-    func progressView(progressView: ASProgressPopUpView!, stringForProgress progress: Float) -> String! {
-        return "视频至少拍摄1分钟"
     }
     
     //MARK: -

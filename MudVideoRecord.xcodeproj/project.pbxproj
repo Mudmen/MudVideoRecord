@@ -16,8 +16,6 @@
 		AE8E45791C4E1F1900A0DECE /* MudVideoPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E45781C4E1F1900A0DECE /* MudVideoPreviewView.swift */; };
 		AE8E457B1C4E217F00A0DECE /* MudVideoRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E457A1C4E217F00A0DECE /* MudVideoRecordViewController.swift */; };
 		AE8E457D1C4E229300A0DECE /* MudVideoControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E457C1C4E229300A0DECE /* MudVideoControls.swift */; };
-		AE8E45831C4E270C00A0DECE /* ASPopUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8E45801C4E270C00A0DECE /* ASPopUpView.m */; };
-		AE8E45841C4E270C00A0DECE /* ASProgressPopUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8E45821C4E270C00A0DECE /* ASProgressPopUpView.m */; };
 		AE8E45951C50B43900A0DECE /* MudVideoRecord.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AE8E45941C50B43900A0DECE /* MudVideoRecord.bundle */; };
 /* End PBXBuildFile section */
 
@@ -54,11 +52,6 @@
 		AE8E45781C4E1F1900A0DECE /* MudVideoPreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MudVideoPreviewView.swift; sourceTree = "<group>"; };
 		AE8E457A1C4E217F00A0DECE /* MudVideoRecordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MudVideoRecordViewController.swift; sourceTree = "<group>"; };
 		AE8E457C1C4E229300A0DECE /* MudVideoControls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MudVideoControls.swift; sourceTree = "<group>"; };
-		AE8E457E1C4E270B00A0DECE /* MudVideoRecord-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MudVideoRecord-Bridging-Header.h"; sourceTree = "<group>"; };
-		AE8E457F1C4E270C00A0DECE /* ASPopUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASPopUpView.h; sourceTree = "<group>"; };
-		AE8E45801C4E270C00A0DECE /* ASPopUpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASPopUpView.m; sourceTree = "<group>"; };
-		AE8E45811C4E270C00A0DECE /* ASProgressPopUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASProgressPopUpView.h; sourceTree = "<group>"; };
-		AE8E45821C4E270C00A0DECE /* ASProgressPopUpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASProgressPopUpView.m; sourceTree = "<group>"; };
 		AE8E45941C50B43900A0DECE /* MudVideoRecord.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MudVideoRecord.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -142,14 +135,9 @@
 			isa = PBXGroup;
 			children = (
 				AE8E45941C50B43900A0DECE /* MudVideoRecord.bundle */,
-				AE8E457F1C4E270C00A0DECE /* ASPopUpView.h */,
-				AE8E45801C4E270C00A0DECE /* ASPopUpView.m */,
-				AE8E45811C4E270C00A0DECE /* ASProgressPopUpView.h */,
-				AE8E45821C4E270C00A0DECE /* ASProgressPopUpView.m */,
 				AE8E45781C4E1F1900A0DECE /* MudVideoPreviewView.swift */,
 				AE8E457A1C4E217F00A0DECE /* MudVideoRecordViewController.swift */,
 				AE8E457C1C4E229300A0DECE /* MudVideoControls.swift */,
-				AE8E457E1C4E270B00A0DECE /* MudVideoRecord-Bridging-Header.h */,
 			);
 			path = MudVideoRecord;
 			sourceTree = "<group>";
@@ -287,10 +275,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE8E457B1C4E217F00A0DECE /* MudVideoRecordViewController.swift in Sources */,
-				AE8E45831C4E270C00A0DECE /* ASPopUpView.m in Sources */,
 				AE8E45791C4E1F1900A0DECE /* MudVideoPreviewView.swift in Sources */,
 				AE8E454C1C4E1E6F00A0DECE /* ViewController.swift in Sources */,
-				AE8E45841C4E270C00A0DECE /* ASProgressPopUpView.m in Sources */,
 				AE8E457D1C4E229300A0DECE /* MudVideoControls.swift in Sources */,
 				AE8E454A1C4E1E6F00A0DECE /* AppDelegate.swift in Sources */,
 			);
@@ -433,7 +419,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Mudmen.MudVideoRecord;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "MudVideoRecord/MudVideoRecord/MudVideoRecord-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -450,7 +436,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Mudmen.MudVideoRecord;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "MudVideoRecord/MudVideoRecord/MudVideoRecord-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
