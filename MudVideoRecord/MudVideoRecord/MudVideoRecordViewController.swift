@@ -37,11 +37,9 @@ public class MudVideoRecordViewController: UIViewController {
     /// Camera config
     private var sessionQueue: dispatch_queue_t!
     private var session: AVCaptureSession!
-    private var videoDevice: AVCaptureDevice!
     private var videoInput: AVCaptureDeviceInput!
     private var videoOutput: AVCaptureVideoDataOutput!
     private var movieOutput: AVCaptureMovieFileOutput!
-    private var audioDevice: AVCaptureDevice!
     private var audioInput: AVCaptureDeviceInput!
     private var audioOutput: AVCaptureAudioDataOutput!
     private var setupResult: MudVideoRecordSetupResult!
@@ -52,8 +50,8 @@ public class MudVideoRecordViewController: UIViewController {
     private var audioAssetWriterInput: AVAssetWriterInput!
     private var frameDuration: CMTime! //一帧的时长
     private var nextFpts: CMTime! //下一帧
-    lazy private var maxFrame: Int = 50*24 //最大帧数 每秒24帧 50秒
-    lazy private var minFrame: Int = 24*10 //最小帧数 10秒
+    lazy private var maxFrame: Int = 10*24 //最大帧数 每秒24帧 10秒
+    lazy private var minFrame: Int = 24*3 //最小帧数 3秒
     lazy private var currentFrame: Int = 0  //当前帧数
     
     lazy private var videoWidth: CGFloat = { return 640 }()
@@ -64,7 +62,15 @@ public class MudVideoRecordViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.initView()
+        
+        ///清空下文件路径
+        self.deleteFile(self.tmpVideoCacheURL)
+        self.deleteFile(self.videoFileCacheURL)
+        
+        ///初始化拍摄类
         self.initSession()
+        
+        ///设置输入输出
         self.setupResult = MudVideoRecordSetupResult.Success
         self.sessionQueue = dispatch_queue_create("session queue", DISPATCH_QUEUE_SERIAL );
         //判断是否有使用摄像头的权限
@@ -122,13 +128,17 @@ public class MudVideoRecordViewController: UIViewController {
         self.videoWidth = self.view.bounds.size.width
         self.videoHeight = self.view.bounds.size.width*0.75
         
-        self.previewView  = MudVideoPreviewView(frame: CGRectMake(0,64,self.videoWidth,self.videoHeight))
-        self.previewView.backgroundColor = UIColor.grayColor()
-        self.view.addSubview(self.previewView)
-        
         self.controls = MudVideoControls(frame: self.view.bounds)
         self.controls.delegate = self
         self.view.addSubview(self.controls)
+        
+        self.previewView  = MudVideoPreviewView(frame: CGRectMake(0,64,self.videoWidth,self.videoHeight))
+        self.previewView.backgroundColor = UIColor.grayColor()
+        let tapGesture = UITapGestureRecognizer()
+        tapGesture.addTarget(self, action: "focusAction:")
+        self.previewView.addGestureRecognizer(tapGesture)
+        self.view.addSubview(self.previewView)
+        
     }
     
     private func initSession() {
@@ -140,10 +150,10 @@ public class MudVideoRecordViewController: UIViewController {
     
     private func initInputOutput() {
         do {
-            self.videoDevice = self.deviceWithMediaType(AVMediaTypeVideo, preferringPosition: AVCaptureDevicePosition.Back)
-            self.videoInput = try AVCaptureDeviceInput(device: self.videoDevice)
-            self.videoOutput = AVCaptureVideoDataOutput()
             self.session.beginConfiguration()
+            let videoDevice = self.deviceWithMediaType(AVMediaTypeVideo, preferringPosition: AVCaptureDevicePosition.Back)
+            self.videoInput = try AVCaptureDeviceInput(device: videoDevice)
+            self.videoOutput = AVCaptureVideoDataOutput()
             if self.session.canAddOutput(self.videoOutput) {
                 self.session.addOutput(self.videoOutput)
                 self.videoOutput.setSampleBufferDelegate(self, queue: self.sessionQueue)
@@ -162,8 +172,8 @@ public class MudVideoRecordViewController: UIViewController {
             } else {
                 self.setupResult = MudVideoRecordSetupResult.ConfigurationFailed
             }
-            self.audioDevice = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeAudio)
-            self.audioInput = try AVCaptureDeviceInput(device: self.audioDevice)
+            let audioDevice = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeAudio)
+            self.audioInput = try AVCaptureDeviceInput(device: audioDevice)
             if self.session.canAddInput(self.audioInput) {
                 self.session.addInput(self.audioInput)
             }
@@ -181,12 +191,10 @@ public class MudVideoRecordViewController: UIViewController {
     private func initAssetWriterWithFormatDescription(format: CMFormatDescription?)->Bool {
         
         if format == nil {
-            self.setupResult = MudVideoRecordSetupResult.ConfigurationFailed
             return false
         }
         
         do {
-            self.deleteFile(self.tmpVideoCacheURL)
             try self.assetWriter = AVAssetWriter(URL: self.tmpVideoCacheURL , fileType: AVFileTypeMPEG4)
             let videoCompressionProperties = [AVVideoAverageBitRateKey: NSNumber(double: 480*1024)]
             NSLog("%f   %f", self.videoWidth,self.videoHeight)
@@ -205,7 +213,10 @@ public class MudVideoRecordViewController: UIViewController {
                 self.assetWriter.addInput(self.audioAssetWriterInput)
             }
             
-            let rotationDegrees: CGFloat = 90
+            var rotationDegrees: CGFloat = 90
+            if self.videoInput.device.position == AVCaptureDevicePosition.Front {
+                rotationDegrees = -90
+            }
             let rotationRadians = rotationDegrees*CGFloat(M_PI)/180
             self.videoAssetWriterInput.transform = CGAffineTransformMakeRotation(rotationRadians)
             
@@ -214,7 +225,6 @@ public class MudVideoRecordViewController: UIViewController {
             self.assetWriter.startSessionAtSourceTime(self.nextFpts)
             return true
         } catch _ as NSError {
-            self.setupResult = MudVideoRecordSetupResult.ConfigurationFailed
             return false
         }
     }
@@ -229,6 +239,45 @@ public class MudVideoRecordViewController: UIViewController {
             }
         }
         return defaultDevice
+    }
+    
+    private func setTorchMode(tourMode: AVCaptureTorchMode,forDevice device: AVCaptureDevice) {
+        if device.hasTorch && device.isTorchModeSupported(tourMode) {
+            do {
+                try device.lockForConfiguration()
+                device.torchMode = tourMode
+                device.unlockForConfiguration()
+            } catch _ {
+                
+            }
+        }
+    }
+
+    private func focusWithMode(focusMode: AVCaptureFocusMode, exposeWithMode exposureMode: AVCaptureExposureMode,atDevicePoint point: CGPoint, monitorSubjectAreaChange: Bool) {
+        dispatch_async(self.sessionQueue) { () -> Void in
+            let videoDevice = self.videoInput.device
+            do {
+                try videoDevice.lockForConfiguration()
+                if videoDevice.focusPointOfInterestSupported && videoDevice.isFocusModeSupported(focusMode) {
+                    videoDevice.focusPointOfInterest = point
+                    videoDevice.focusMode = focusMode
+                }
+                
+                if videoDevice.exposurePointOfInterestSupported && videoDevice.isExposureModeSupported(exposureMode) {
+                    videoDevice.exposurePointOfInterest = point
+                    videoDevice.exposureMode = exposureMode
+                }
+                
+                videoDevice.subjectAreaChangeMonitoringEnabled = monitorSubjectAreaChange
+                videoDevice.unlockForConfiguration()
+            } catch _ {
+                
+            }
+        }
+    }
+    
+    deinit {
+        self.deleteFile(self.tmpVideoCacheURL)
     }
 }
 
@@ -249,23 +298,21 @@ extension MudVideoRecordViewController: MudVideoControlsDelegate {
             return
         }
         dispatch_async(self.sessionQueue) { () -> Void in
-            self.stopRecordWithCompletionHandler { () -> Void in
+            self.finishRecordWithCompletionHandler({ () -> Void in
                 self.cropVideoSquare()
-            }
+            })
         }
     }
     
     func videoControls(controls: MudVideoControls,cancelDidSelected sendr: AnyObject?) {
         dispatch_async(self.sessionQueue) { () -> Void in
-            self.stopRecordWithCompletionHandler { () -> Void in
-                self.deleteFile(self.tmpVideoCacheURL)
+            self.finishRecordWithCompletionHandler { () -> Void in
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.dismissViewControllerAnimated(true, completion: { () -> Void in
                     })
                 })
             }
         }
-      
     }
     
     func videoControls(controls: MudVideoControls,deleteDidSelected sendr: AnyObject?) {
@@ -278,77 +325,166 @@ extension MudVideoRecordViewController: MudVideoControlsDelegate {
     
     func videoControls(controls: MudVideoControls,cameraChangeDidSelected sendr: AnyObject?) {
         
+        if self.writing {
+            return
+        }
+        
+        controls.cameraChangeButton.enabled = false
+        controls.flashModeChangeButton.enabled = false
+        dispatch_async(self.sessionQueue) { () -> Void in
+            let currentVideoDevice = self.videoInput.device
+            var preferredPosition = AVCaptureDevicePosition.Unspecified
+            let currentPosition = currentVideoDevice.position
+            var enableFlash: Bool = false
+            switch (currentPosition) {
+                case AVCaptureDevicePosition.Unspecified:
+                    break
+                case AVCaptureDevicePosition.Front:
+                    preferredPosition = AVCaptureDevicePosition.Back
+                    enableFlash = true
+                    break
+                case AVCaptureDevicePosition.Back:
+                    preferredPosition = AVCaptureDevicePosition.Front
+                    break
+            }
+            do {
+                let videoDevice = self.deviceWithMediaType(AVMediaTypeVideo, preferringPosition: preferredPosition)
+                let videoDeviceInput = try AVCaptureDeviceInput(device: videoDevice)
+                self.session.beginConfiguration()
+                self.session.removeInput(self.videoInput)
+                if self.session.canAddInput(videoDeviceInput) {
+                    self.session.addInput(videoDeviceInput)
+                    self.setTorchMode(AVCaptureTorchMode.Off, forDevice: videoDevice)
+                    self.videoInput =  videoDeviceInput
+                } else {
+                    self.session.addInput(self.videoInput)
+                }
+                self.session.commitConfiguration()
+            } catch _ as NSError {
+                
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    controls.flashModeChangeButton.enabled = enableFlash
+                    controls.cameraChangeButton.enabled = true
+            })
+            
+        }
     }
     
     func videoControls(controls: MudVideoControls,flashModeChangeDidSelected sendr: AnyObject?) {
-
+        
+        if self.writing {
+            return
+        }
+        
+        controls.cameraChangeButton.enabled = false
+        controls.flashModeChangeButton.enabled = false
+        dispatch_async(self.sessionQueue) { () -> Void in
+            let  videoDevice = self.videoInput.device
+            var torchMode = videoDevice.torchMode
+            switch (torchMode)
+            {
+            case AVCaptureTorchMode.Off:
+                torchMode = AVCaptureTorchMode.On
+                break
+            case AVCaptureTorchMode.On:
+                torchMode = AVCaptureTorchMode.Off
+                break
+            default:
+                torchMode = AVCaptureTorchMode.Off
+                break
+            }
+            self.session.beginConfiguration()
+            self.setTorchMode(torchMode, forDevice: videoDevice)
+            self.session.commitConfiguration()
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                controls.flashModeChangeButton.enabled = true
+                controls.cameraChangeButton.enabled = true
+                controls.updateTorchButtonWithTorchMode(torchMode)
+            })
+        }
+    }
+    
+    func focusAction(gesture: UITapGestureRecognizer) {
+        let devicePoint = (self.previewView.layer as! AVCaptureVideoPreviewLayer).captureDevicePointOfInterestForPoint(gesture.locationInView(gesture.view))
+        self.focusWithMode(AVCaptureFocusMode.AutoFocus, exposeWithMode: AVCaptureExposureMode.AutoExpose, atDevicePoint: devicePoint, monitorSubjectAreaChange: true)
     }
 }
 
 extension MudVideoRecordViewController: AVCaptureAudioDataOutputSampleBufferDelegate,AVCaptureVideoDataOutputSampleBufferDelegate {
     
-    //MARK: - Delegate
     public func captureOutput(captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, fromConnection connection: AVCaptureConnection!) {
-        if self.writing {
-            if self.assetWriter == nil {
-                if self.initAssetWriterWithFormatDescription(CMSampleBufferGetFormatDescription(sampleBuffer)!) == false {
-                    NSLog("AssetWriter init error")
-                    return
-                }
-            }
-            var timingInfo = kCMTimingInfoInvalid
-            timingInfo.duration = self.frameDuration
-            timingInfo.presentationTimeStamp = self.nextFpts
-            var sbufWithNewTiming: CMSampleBuffer? = nil
-            let error = CMSampleBufferCreateCopyWithNewTiming(kCFAllocatorDefault, sampleBuffer, 1, &timingInfo, &sbufWithNewTiming)
-            if error != 0 {
-                return
-            }
-            
-            if captureOutput == self.videoOutput {
-                if self.videoAssetWriterInput.readyForMoreMediaData && sbufWithNewTiming != nil {
-                    if self.videoAssetWriterInput.appendSampleBuffer(sbufWithNewTiming!) {
-                        self.nextFpts = CMTimeAdd(self.frameDuration, self.nextFpts)
-                    } else {
-                        //hand error
-                        NSLog("%@",self.assetWriter.error!.userInfo)
-                    }
-                } else {
-                    //hand error
-                }
-                self.currentFrame++
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    //update progress
-                    let progress = Float(self.currentFrame)/Float(self.maxFrame)
-                    self.controls.updateProgressView(progress)
-                    if self.currentFrame >= self.maxFrame {
-                        self.stopRecordWithCompletionHandler({ () -> Void in
-                            self.cropVideoSquare()
-                        })
-                    }
-                })
-                
-            } else if captureOutput == self.audioOutput {
-                if (self.assetWriter.status.rawValue > AVAssetWriterStatus.Writing.rawValue) {
-                    if (self.assetWriter.status == AVAssetWriterStatus.Failed) {
+        dispatch_async(self.sessionQueue) { () -> Void in
+            if self.writing {
+                if self.assetWriter == nil {
+                    if self.initAssetWriterWithFormatDescription(CMSampleBufferGetFormatDescription(sampleBuffer)!) == false {
+                        NSLog("AssetWriter init error")
                         return
                     }
                 }
-                if self.audioAssetWriterInput.readyForMoreMediaData && sbufWithNewTiming != nil {
-                    if self.audioAssetWriterInput.appendSampleBuffer(sbufWithNewTiming!) {
-                        NSLog("audio success")
+                var timingInfo = kCMTimingInfoInvalid
+                timingInfo.duration = self.frameDuration
+                timingInfo.presentationTimeStamp = self.nextFpts
+                var sbufWithNewTiming: CMSampleBuffer? = nil
+                let error = CMSampleBufferCreateCopyWithNewTiming(kCFAllocatorDefault, sampleBuffer, 1, &timingInfo, &sbufWithNewTiming)
+                if error != 0 {
+                    return
+                }
+                
+                if captureOutput == self.videoOutput {
+                    if self.videoAssetWriterInput.readyForMoreMediaData && sbufWithNewTiming != nil {
+                        if self.videoAssetWriterInput.appendSampleBuffer(sbufWithNewTiming!) {
+                            self.nextFpts = CMTimeAdd(self.frameDuration, self.nextFpts)
+                        } else {
+                            //hand error
+                            NSLog("%@",self.assetWriter.error!.userInfo)
+                        }
+                    } else {
+                        //hand error
+                    }
+                    
+                    //update progress
+                    self.currentFrame++
+                    let progress = Float(self.currentFrame)/Float(self.maxFrame)
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.controls.updateProgressView(progress)
+                    })
+
+                    //if max stop
+                    if self.currentFrame >= self.maxFrame {
+                        self.finishRecordWithCompletionHandler({ () -> Void in
+                            self.cropVideoSquare()
+                        })
+                    }
+                    
+                } else if captureOutput == self.audioOutput {
+                    if (self.assetWriter.status.rawValue > AVAssetWriterStatus.Writing.rawValue) {
+                        if (self.assetWriter.status == AVAssetWriterStatus.Failed) {
+                            return
+                        }
+                    }
+                    if self.audioAssetWriterInput.readyForMoreMediaData && sbufWithNewTiming != nil {
+                        if self.audioAssetWriterInput.appendSampleBuffer(sbufWithNewTiming!) {
+                            NSLog("audio success")
+                        }
                     }
                 }
             }
         }
     }
-    
-    private func stopRecordWithCompletionHandler(handler: () -> Void) {
+    //success: () -> Void, failed: (NSError) -> Void)
+    private func finishRecordWithCompletionHandler(handler: () -> Void) {
         if self.running == false {
+            handler()
             return
         }
-        self.running = false
+        self.writing = false
+        self.session.beginConfiguration()
+        self.setTorchMode(AVCaptureTorchMode.Off, forDevice: self.videoInput.device)
+        self.session.commitConfiguration()
         self.session.stopRunning()
+        self.running = self.session.running
         if self.assetWriter != nil {
             self.videoAssetWriterInput.markAsFinished()
             self.assetWriter.finishWritingWithCompletionHandler({ () -> Void in
@@ -358,6 +494,11 @@ extension MudVideoRecordViewController: AVCaptureAudioDataOutputSampleBufferDele
                     handler()
                 }
             })
+        }
+        
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            self.controls.updateRecordButtonWithStatus(false)
+            self.controls.updateTorchButtonWithTorchMode(AVCaptureTorchMode.Off)
         }
     }
     
@@ -406,7 +547,6 @@ extension MudVideoRecordViewController: AVCaptureAudioDataOutputSampleBufferDele
         exporter?.outputURL = self.videoFileCacheURL
         exporter?.outputFileType = AVFileTypeMPEG4
         exporter?.exportAsynchronouslyWithCompletionHandler({ () -> Void in
-            self.deleteFile(self.tmpVideoCacheURL)
             let library = ALAssetsLibrary()
             if library.videoAtPathIsCompatibleWithSavedPhotosAlbum(self.videoFileCacheURL) {
                 library.writeVideoAtPathToSavedPhotosAlbum(self.videoFileCacheURL, completionBlock: { (assetURL, error) -> Void in

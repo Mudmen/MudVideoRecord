@@ -12,16 +12,20 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        let controller = MudVideoRecordViewController()
-        self.presentViewController(controller, animated: true) { () -> Void in
+        
+        let button =  UIButton(type: UIButtonType.Custom)
+        button.frame = CGRectMake(0,0,100, 100)
+        button.setImage(UIImage(named: "MudVideoRecord.bundle/camera"), forState: UIControlState.Normal)
+        button.addTarget(self, action: "buttonAction:", forControlEvents: UIControlEvents.TouchUpInside)
+        button.center = CGPointMake(CGRectGetWidth(self.view.frame)/2, CGRectGetHeight(self.view.frame)/2)
+        self.view.addSubview(button)
+    }
+    
+    func buttonAction(sender: AnyObject?) {
+        let recordVC = MudVideoRecordViewController()
+        self.presentViewController(recordVC, animated: true) { () -> Void in
             
         }
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
 

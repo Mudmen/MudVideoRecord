@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AVFoundation
+import Foundation
 
 protocol MudVideoControlsDelegate: NSObjectProtocol {
     func videoControls(controls: MudVideoControls,startOrPauseDidSelected sendr: AnyObject?)
@@ -106,9 +108,11 @@ class MudVideoControls: UIView,ASProgressPopUpViewDataSource {
         let bottomHeight = self.bounds.size.height-64-self.bounds.size.width*0.75
         self.recordButton = UIButton(type: UIButtonType.Custom)
         self.recordButton.setImage(UIImage(named: "MudVideoRecord.bundle/record_normal"), forState: UIControlState.Normal)
+        self.recordButton.setImage(UIImage(named: "MudVideoRecord.bundle/recording.png"), forState: UIControlState.Highlighted)
         self.recordButton.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
         self.recordButton.frame =  CGRectMake(0, 0, 64, 64)
         self.recordButton.addTarget(self, action: "buttonAction:", forControlEvents: UIControlEvents.TouchUpInside)
+        self.recordButton.addTarget(self, action: "buttonAction:", forControlEvents: UIControlEvents.TouchDown)
         self.recordButton.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height-bottomHeight/2)
         self.addSubview(self.recordButton)
         
@@ -127,7 +131,7 @@ class MudVideoControls: UIView,ASProgressPopUpViewDataSource {
         self.deleteButton.center = CGPointMake(42+22.5, self.bounds.size.height-bottomHeight/2)
         self.addSubview(self.deleteButton)
         
-        self.progressView = ASProgressPopUpView(frame: CGRectMake(0,64+self.bounds.width*0.75,self.bounds.width,3))
+        self.progressView = ASProgressPopUpView(frame: CGRectMake(0,64+self.bounds.width*0.75,self.bounds.width,1))
         self.progressView.font = UIFont.systemFontOfSize(12)
         self.progressView.trackTintColor = UIColor(red: 138.0/255.0, green: 137.0/255.0, blue: 137.0/255.0, alpha: 1)
         self.progressView.progressTintColor = UIColor(red: 244.0/255.0, green: 167.0/255.0, blue: 48.0/255.0, alpha: 1)
@@ -135,17 +139,28 @@ class MudVideoControls: UIView,ASProgressPopUpViewDataSource {
 //        minView.backgroundColor = UIColor.whiteColor()
 //        minView.alpha = 0.9
 //        self.progressView.addSubview(minView)
+        self.progressView.transform = CGAffineTransformMakeScale(1.0,3.0)
+        self.progressView.translatesAutoresizingMaskIntoConstraints = false
         self.progressView.progress = 0
         self.progressView.dataSource = self
         self.addSubview(self.progressView)
     }
+    
+    /*extension NSObject {
+    
+    public func performSelector(aSelector: Selector, withObject anArgument: AnyObject?, afterDelay delay: NSTimeInterval, inModes modes: [String])
+    public func performSelector(aSelector: Selector, withObject anArgument: AnyObject?, afterDelay delay: NSTimeInterval)
+    public class func cancelPreviousPerformRequestsWithTarget(aTarget: AnyObject, selector aSelector: Selector, object anArgument: AnyObject?)
+    public class func cancelPreviousPerformRequestsWithTarget(aTarget: AnyObject)
+    }*/
     
     private func setupLayoutConstraint() {}
     
     func buttonAction(sender: UIButton?) {
         if self.delegate != nil {
             if sender == self.recordButton {
-                self.delegate?.videoControls(self, startOrPauseDidSelected: sender)
+                NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: "delayAction", object: nil)
+                self.performSelector("delayAction", withObject: nil, afterDelay: 0.1)
             } else if sender == self.finishButton {
                 self.delegate?.videoControls(self, finishDidSelected: sender)
             } else if sender == self.deleteButton {
@@ -160,6 +175,10 @@ class MudVideoControls: UIView,ASProgressPopUpViewDataSource {
         }
     }
     
+    func delayAction() {
+        self.delegate?.videoControls(self, startOrPauseDidSelected: self.recordButton)
+    }
+    
     func progressView(progressView: ASProgressPopUpView!, stringForProgress progress: Float) -> String! {
         return "视频至少拍摄1分钟"
     }
@@ -169,11 +188,30 @@ class MudVideoControls: UIView,ASProgressPopUpViewDataSource {
         self.progressView.setProgress(progress, animated: true)
     }
     
+    func updateTorchButtonWithTorchMode(mode: AVCaptureTorchMode) {
+        switch (mode)
+        {
+        case AVCaptureTorchMode.Off:
+            self.flashModeChangeButton.setImage(UIImage(named: "MudVideoRecord.bundle/flash_close"), forState: UIControlState.Normal)
+            break
+        case AVCaptureTorchMode.On:
+            self.flashModeChangeButton.setImage(UIImage(named: "MudVideoRecord.bundle/flash_open"), forState: UIControlState.Normal)
+            break
+        case AVCaptureTorchMode.Auto:
+            self.flashModeChangeButton.setImage(UIImage(named: "MudVideoRecord.bundle/flash_close"), forState: UIControlState.Normal)
+            break
+        }
+    }
+    
     func updateRecordButtonWithStatus(writing: Bool) {
         if writing {
             self.recordButton.setImage(UIImage(named: "MudVideoRecord.bundle/recording.png"), forState: UIControlState.Normal)
         } else {
             self.recordButton.setImage(UIImage(named: "MudVideoRecord.bundle/record_normal.png"), forState: UIControlState.Normal)
         }
+        self.flashModeChangeButton.hidden = writing
+        self.cameraChangeButton.hidden = writing
+        self.cancelButton.hidden = writing
+        self.deleteButton.enabled = !writing
     }
 }
