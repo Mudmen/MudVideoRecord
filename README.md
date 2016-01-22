@@ -1,7 +1,10 @@
 # MudVideoRecord
 Video Recorder
 
-keys: swift,video,record,camera
- ![image](https://github.com/ButBueatiful/dotvim/raw/master/screenshots/vim-screenshot.jpg)
+#Keys
+swift,video,record,camera
+
+#Screenshort
+![image](https://github.com/Mudmen/MudSource/blob/master/MudVideoRecord/main.PNG?raw=true)
  
 #MIT
