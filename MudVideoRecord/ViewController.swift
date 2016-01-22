@@ -12,7 +12,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.view.backgroundColor = UIColor.whiteColor()
         let button =  UIButton(type: UIButtonType.Custom)
         button.frame = CGRectMake(0,0,100, 100)
         button.setImage(UIImage(named: "MudVideoRecord.bundle/camera"), forState: UIControlState.Normal)
