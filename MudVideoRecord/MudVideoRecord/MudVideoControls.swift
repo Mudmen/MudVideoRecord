@@ -17,8 +17,8 @@ protocol MudVideoControlsDelegate: NSObjectProtocol {
     func videoControls(controls: MudVideoControls,deleteDidSelected sendr: AnyObject?)
     func videoControls(controls: MudVideoControls,cameraChangeDidSelected sendr: AnyObject?)
     func videoControls(controls: MudVideoControls,flashModeChangeDidSelected sendr: AnyObject?)
+    func videoControls(controls: MudVideoControls,focusChangeDidSelected sender: UITapGestureRecognizer)
 }
-
 
 class MudVideoControls: UIView {
 
@@ -64,6 +64,12 @@ class MudVideoControls: UIView {
     var flashModeChangeButton: UIButton!
     
     /*!
+    @property recordTimeLabel
+    @abstract 拍摄时长显示
+    */
+    var recordTimeLabel: UIButton!
+    
+    /*!
     @property progressView
     @abstract 拍摄进度
     */
@@ -82,6 +88,21 @@ class MudVideoControls: UIView {
     
     private func setupView() {
         self.backgroundColor = UIColor.clearColor()
+        
+        let bottomHeight = self.bounds.size.height-64-self.bounds.size.width*0.75
+        
+        let whiteTopView = UIView(frame: CGRectMake(0,0,self.bounds.size.width,64))
+        whiteTopView.backgroundColor = UIColor.whiteColor()
+        whiteTopView.alpha = 0.5
+        whiteTopView.userInteractionEnabled = false
+        self.addSubview(whiteTopView)
+        
+        let whiteBottomView = UIView(frame: CGRectMake(0,64+self.bounds.size.width*0.75,self.bounds.size.width,bottomHeight))
+        whiteBottomView.backgroundColor = UIColor.whiteColor()
+        whiteBottomView.alpha = 0.5
+        whiteBottomView.userInteractionEnabled = false
+        self.addSubview(whiteBottomView)
+        
         self.cancelButton = UIButton(type: UIButtonType.Custom)
         self.cancelButton.setTitle("取消", forState: UIControlState.Normal)
         self.cancelButton.frame = CGRectMake(0, 20, 100, 44)
@@ -105,14 +126,22 @@ class MudVideoControls: UIView {
         self.flashModeChangeButton.setImage(UIImage(named: "MudVideoRecord.bundle/flash_close"), forState: UIControlState.Normal)
         self.addSubview(self.flashModeChangeButton)
         
-        let bottomHeight = self.bounds.size.height-64-self.bounds.size.width*0.75
+        self.recordTimeLabel = UIButton(type: UIButtonType.Custom)
+        self.recordTimeLabel.setBackgroundImage(UIImage(named: "MudVideoRecord.bundle/timebg.png")?.stretchableImageWithLeftCapWidth(15, topCapHeight: 7), forState: UIControlState.Normal)
+        self.recordTimeLabel.setTitleColor(UIColor.lightGrayColor(), forState: UIControlState.Normal)
+        self.recordTimeLabel.titleLabel?.font = UIFont.systemFontOfSize(12)
+        self.recordTimeLabel.frame =  CGRectMake(0, 0, 50, 20)
+        self.recordTimeLabel.center = CGPointMake(self.bounds.size.width-32.5, 64+self.bounds.size.width*0.75+3+20)
+        self.recordTimeLabel.setTitle(String(format: "%0.1f秒",0), forState: UIControlState.Normal)
+        self.addSubview(self.recordTimeLabel)
+        
         self.recordButton = UIButton(type: UIButtonType.Custom)
         self.recordButton.setImage(UIImage(named: "MudVideoRecord.bundle/record_normal"), forState: UIControlState.Normal)
-        self.recordButton.setImage(UIImage(named: "MudVideoRecord.bundle/recording.png"), forState: UIControlState.Highlighted)
+        self.recordButton.setImage(UIImage(named: "MudVideoRecord.bundle/record_normal"), forState: UIControlState.Highlighted)
         self.recordButton.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
-        self.recordButton.frame =  CGRectMake(0, 0, 64, 64)
+        self.recordButton.frame =  CGRectMake(0, 0, 90, 90)
         self.recordButton.addTarget(self, action: "buttonAction:", forControlEvents: UIControlEvents.TouchUpInside)
-        self.recordButton.addTarget(self, action: "buttonAction:", forControlEvents: UIControlEvents.TouchDown)
+//        self.recordButton.addTarget(self, action: "buttonAction:", forContrsolEvents: UIControlEvents.TouchDown)
         self.recordButton.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height-bottomHeight/2)
         self.addSubview(self.recordButton)
         
@@ -121,23 +150,26 @@ class MudVideoControls: UIView {
         self.finishButton.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
         self.finishButton.frame =  CGRectMake(CGRectGetMaxX(self.recordButton.frame), 0, 45, 45)
         self.finishButton.addTarget(self, action: "buttonAction:", forControlEvents: UIControlEvents.TouchUpInside)
-        self.finishButton.center = CGPointMake(self.bounds.size.width-22.5-42, self.bounds.size.height-bottomHeight/2)
+        self.finishButton.center = CGPointMake(self.bounds.size.width-22.5-37, self.bounds.size.height-bottomHeight/2)
         self.addSubview(self.finishButton)
         
         self.deleteButton = UIButton(type: UIButtonType.Custom)
         self.deleteButton.frame = CGRectMake(0, 0, 45, 45)
         self.deleteButton.setImage(UIImage(named: "MudVideoRecord.bundle/delete"), forState: UIControlState.Normal)
         self.deleteButton.addTarget(self, action: "buttonAction:", forControlEvents: UIControlEvents.TouchUpInside)
-        self.deleteButton.center = CGPointMake(42+22.5, self.bounds.size.height-bottomHeight/2)
+        self.deleteButton.center = CGPointMake(37+22.5, self.bounds.size.height-bottomHeight/2)
         self.addSubview(self.deleteButton)
         
         self.progressView = UIProgressView(frame: CGRectMake(0,64+self.bounds.width*0.75,self.bounds.width,1))
         self.progressView.trackTintColor = UIColor(red: 138.0/255.0, green: 137.0/255.0, blue: 137.0/255.0, alpha: 1)
         self.progressView.progressTintColor = UIColor(red: 244.0/255.0, green: 167.0/255.0, blue: 48.0/255.0, alpha: 1)
         self.progressView.transform = CGAffineTransformMakeScale(1.0,3.0)
-        self.progressView.translatesAutoresizingMaskIntoConstraints = false
         self.progressView.progress = 0
         self.addSubview(self.progressView)
+        
+        let tapGesture = UITapGestureRecognizer()
+        tapGesture.addTarget(self, action: "focusAction:")
+        self.addGestureRecognizer(tapGesture)
     }
     
     /*extension NSObject {
@@ -146,6 +178,7 @@ class MudVideoControls: UIView {
     public func performSelector(aSelector: Selector, withObject anArgument: AnyObject?, afterDelay delay: NSTimeInterval)
     public class func cancelPreviousPerformRequestsWithTarget(aTarget: AnyObject, selector aSelector: Selector, object anArgument: AnyObject?)
     public class func cancelPreviousPerformRequestsWithTarget(aTarget: AnyObject)
+    
     }*/
     
     private func setupLayoutConstraint() {}
@@ -153,8 +186,9 @@ class MudVideoControls: UIView {
     func buttonAction(sender: UIButton?) {
         if self.delegate != nil {
             if sender == self.recordButton {
-                NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: "delayAction", object: nil)
-                self.performSelector("delayAction", withObject: nil, afterDelay: 0.1)
+                self.delegate?.videoControls(self, startOrPauseDidSelected: self.recordButton)
+//                NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: "delayAction", object: nil)
+//                self.performSelector("delayAction", withObject: nil, afterDelay: 0.20)
             } else if sender == self.finishButton {
                 self.delegate?.videoControls(self, finishDidSelected: sender)
             } else if sender == self.deleteButton {
@@ -169,6 +203,12 @@ class MudVideoControls: UIView {
         }
     }
     
+    func focusAction(sender: UITapGestureRecognizer) {
+        if self.delegate != nil {
+            self.delegate?.videoControls(self, focusChangeDidSelected: sender)
+        }
+    }
+    
     func delayAction() {
         self.delegate?.videoControls(self, startOrPauseDidSelected: self.recordButton)
     }
@@ -176,6 +216,10 @@ class MudVideoControls: UIView {
     //MARK: -
     func updateProgressView(progress: Float) {
         self.progressView.setProgress(progress, animated: true)
+    }
+    
+    func updateTime(seconds: Float) {
+        self.recordTimeLabel.setTitle(String(format: "%0.1f秒",seconds), forState: UIControlState.Normal)
     }
     
     func updateTorchButtonWithTorchMode(mode: AVCaptureTorchMode) {
